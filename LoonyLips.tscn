@@ -1,0 +1,134 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://LoonyLips.gd" type="Script" id=1]
+[ext_resource path="res://gfx/blackboard.jpg" type="Texture" id=2]
+[ext_resource path="res://gfx/Feltpen.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://gfx/blue_button12.png" type="Texture" id=4]
+[ext_resource path="res://gfx/blue_button11.png" type="Texture" id=5]
+[ext_resource path="res://Story.gd" type="Script" id=6]
+[ext_resource path="res://sound/ding.wav" type="AudioStream" id=7]
+[ext_resource path="res://sound/Chalk.wav" type="AudioStream" id=8]
+
+[sub_resource type="DynamicFont" id=1]
+size = 40
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 40
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 40
+font_data = ExtResource( 3 )
+
+[node name="LoonyLips" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SFX" type="Node" parent="."]
+
+[node name="Chalk" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource( 8 )
+
+[node name="Ding" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource( 7 )
+
+[node name="Background" type="TextureRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 2 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 24.0
+margin_top = 24.0
+margin_right = -24.0
+margin_bottom = -24.0
+alignment = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="DisplayText" type="Label" parent="VBoxContainer"]
+margin_top = 75.0
+margin_right = 976.0
+margin_bottom = 475.0
+rect_min_size = Vector2( 0, 400 )
+custom_fonts/font = SubResource( 1 )
+text = "Placeholder Text"
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+margin_top = 479.0
+margin_right = 976.0
+margin_bottom = 552.0
+custom_constants/separation = 12
+alignment = 2
+
+[node name="PlayerText" type="LineEdit" parent="VBoxContainer/HBoxContainer"]
+margin_right = 821.0
+margin_bottom = 73.0
+size_flags_horizontal = 3
+custom_fonts/font = SubResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureButton" type="TextureButton" parent="VBoxContainer/HBoxContainer"]
+margin_left = 833.0
+margin_right = 906.0
+margin_bottom = 73.0
+rect_min_size = Vector2( 73, 73 )
+texture_normal = ExtResource( 5 )
+texture_pressed = ExtResource( 4 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer"]
+margin_left = 918.0
+margin_top = 5.0
+margin_right = 976.0
+margin_bottom = 68.0
+custom_fonts/font = SubResource( 3 )
+text = "Ok"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="StoryBook" type="Node" parent="."]
+
+[node name="Story0" type="Node" parent="StoryBook"]
+script = ExtResource( 6 )
+prompts = PoolStringArray( "a name", "a noun", "an adverb", "an adjective" )
+story = "Once upon a time someone named %s ate a %s flavored sandwich which made him feel all %s inside. It was a %s day."
+
+[node name="Story1" type="Node" parent="StoryBook"]
+script = ExtResource( 6 )
+prompts = PoolStringArray( "a noun", "a name", "an adjective", "another name" )
+story = "There once was a %s called %s who searched far and wide for the mythical %s noun of %s."
+
+[node name="Story2" type="Node" parent="StoryBook"]
+script = ExtResource( 6 )
+prompts = PoolStringArray( "a noun", "a second noun", "a verb", "a final noun" )
+story = "There once lived a man in %s. Whom dreamed of a man eating his %s. He %s in the middle of the %s to find that his dream had come true."
+
+[node name="Story3" type="Node" parent="StoryBook"]
+script = ExtResource( 6 )
+prompts = PoolStringArray( "a name", "another name", "a noun", "an adverb" )
+story = "I knew someone named %s who had a cat named %s. Their cat found a tiny little %s, and so the cat %s ran away."
+[connection signal="text_entered" from="VBoxContainer/HBoxContainer/PlayerText" to="." method="_on_PlayerText_text_entered"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/TextureButton" to="." method="_on_TextureButton_pressed"]
